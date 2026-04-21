@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -c /tmp/lcookies.txt http://localhost:5000/)",
+      "Bash(curl -s -b /tmp/lcookies.txt http://localhost:5000/)"
+    ]
+  }
+}

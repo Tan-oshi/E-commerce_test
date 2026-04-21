@@ -1,0 +1,31 @@
+@model Author
+@{
+    ViewData["Title"] = "Sửa tác giả";
+}
+
+<div class="top-bar">
+    <h4 class="mb-0">Sửa tác giả</h4>
+    <a asp-action="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Quay lại</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="mb-3">
+                <label class="form-label">Tên tác giả *</label>
+                <input asp-for="Name" class="form-control" required />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Tiểu sử</label>
+                <textarea asp-for="Bio" class="form-control" rows="4"></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">URL hình ảnh</label>
+                <input asp-for="ImageUrl" class="form-control" placeholder="https://..." />
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg"></i> Lưu thay đổi</button>
+        </form>
+    </div>
+</div>

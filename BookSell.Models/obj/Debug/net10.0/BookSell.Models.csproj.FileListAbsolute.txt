@@ -1,0 +1,12 @@
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Models\bin\Debug\net10.0\BookSell.Models.deps.json
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Models\bin\Debug\net10.0\BookSell.Models.dll
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Models\bin\Debug\net10.0\BookSell.Models.pdb
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Models\obj\Debug\net10.0\BookSell.Models.GeneratedMSBuildEditorConfig.editorconfig
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Models\obj\Debug\net10.0\BookSell.Models.AssemblyInfoInputs.cache
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Models\obj\Debug\net10.0\BookSell.Models.AssemblyInfo.cs
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Models\obj\Debug\net10.0\BookSell.Models.csproj.CoreCompileInputs.cache
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Models\obj\Debug\net10.0\BookSell.Models.dll
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Models\obj\Debug\net10.0\refint\BookSell.Models.dll
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Models\obj\Debug\net10.0\BookSell.Models.pdb
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Models\obj\Debug\net10.0\ref\BookSell.Models.dll
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Models\obj\Debug\net10.0\BookSell.Models.csproj.AssemblyReference.cache

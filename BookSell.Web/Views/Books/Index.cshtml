@@ -1,0 +1,127 @@
+@model IEnumerable<Book>
+@{
+    ViewData["Title"] = "Danh sách sách";
+    var categories = (List<Category>)ViewBag.Categories;
+}
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card p-3">
+            <h6 class="mb-3"><i class="bi bi-funnel"></i> Bộ lọc</h6>
+
+            <form method="get" id="filterForm">
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold">Tìm kiếm</label>
+                    <input type="search" name="search" value="@ViewBag.Search" class="form-control" placeholder="Tên sách, tác giả...">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold">Danh mục</label>
+                    <select name="categoryId" class="form-select" onchange="document.getElementById('filterForm').submit()">
+                        <option value="">Tất cả danh mục</option>
+                        @foreach (var cat in categories)
+                        {
+                            <option value="@cat.Id" selected="@(ViewBag.CategoryId?.ToString() == cat.Id.ToString())">@cat.Name</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold">Sắp xếp</label>
+                    <select name="sortBy" class="form-select" onchange="document.getElementById('filterForm').submit()">
+                        <option value="newest" selected="@(ViewBag.SortBy == "newest")">Mới nhất</option>
+                        <option value="title" selected="@(ViewBag.SortBy == "title")">A → Z</option>
+                        <option value="price_asc" selected="@(ViewBag.SortBy == "price_asc")">Giá: Thấp → Cao</option>
+                        <option value="price_desc" selected="@(ViewBag.SortBy == "price_desc")">Giá: Cao → Thấp</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100"><i class="bi bi-search"></i> Áp dụng</button>
+                @if (ViewBag.Search != null || ViewBag.CategoryId != null || ViewBag.SortBy != null)
+                {
+                    <a asp-action="Index" class="btn btn-outline-secondary w-100 mt-2">Xóa lọc</a>
+                }
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0">@(ViewBag.Search != null ? $"Kết quả: \"{ViewBag.Search}\"" : "Tất cả sách")</h5>
+            <span class="text-muted small">@Model.Count() sản phẩm</span>
+        </div>
+
+        @if (Model.Any())
+        {
+            <div class="row g-3">
+                @foreach (var book in Model)
+                {
+                    <div class="col-6 col-lg-4 col-xl-3">
+                        <div class="product-card card h-100">
+                            <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">
+                                @if (!string.IsNullOrEmpty(book.ImageUrl))
+                                {
+                                    <img src="@book.ImageUrl" class="card-img-top" alt="@book.Title">
+                                }
+                                else
+                                {
+                                    <div style="height:200px;background:#eee;display:flex;align-items:center;justify-content:center">
+                                        <i class="bi bi-book text-muted" style="font-size:2.5rem"></i>
+                                    </div>
+                                }
+                            </a>
+                            <div class="card-body text-center">
+                                <h6 class="card-title mb-1" style="font-size:0.85rem;min-height:2.5rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">
+                                    <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id" class="text-decoration-none text-dark">@book.Title</a>
+                                </h6>
+                                <p class="text-muted small mb-2">@book.Author?.Name</p>
+                                <p class="price-tag mb-2">@book.Price.ToString("N0") đ</p>
+                                @if (book.Stock == 0)
+                                {
+                                    <span class="stock-out small">Hết hàng</span>
+                                }
+                                else
+                                {
+                                    <form asp-controller="Cart" asp-action="Add" method="post" class="d-grid">
+                                        <input type="hidden" name="bookId" value="@book.Id" />
+                                        <input type="hidden" name="title" value="@book.Title" />
+                                        <input type="hidden" name="imageUrl" value="@book.ImageUrl" />
+                                        <input type="hidden" name="price" value="@book.Price" />
+                                        <input type="hidden" name="stock" value="@book.Stock" />
+                                        <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-cart-plus"></i> Thêm vào giỏ</button>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            @if (ViewBag.TotalPages > 1)
+            {
+                <nav class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        @for (int i = 1; i <= (int)ViewBag.TotalPages; i++)
+                        {
+                            <li class="page-item @(i == (int)ViewBag.CurrentPage ? "active" : "")">
+                                <a class="page-link" asp-action="Index"
+                                   asp-route-page="@i"
+                                   asp-route-search="@ViewBag.Search"
+                                   asp-route-categoryId="@ViewBag.CategoryId"
+                                   asp-route-sortBy="@ViewBag.SortBy">@i</a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            }
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <i class="bi bi-search" style="font-size:3rem;color:#ccc"></i>
+                <p class="text-muted mt-3">Không tìm thấy sách nào.</p>
+                <a asp-action="Index" class="btn btn-outline-primary">Xem tất cả sách</a>
+            </div>
+        }
+    </div>
+</div>

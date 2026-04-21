@@ -1,0 +1,103 @@
+@model IEnumerable<Book>
+@{
+    ViewData["Title"] = "Quản lý sách";
+}
+
+<div class="top-bar">
+    <h4 class="mb-0">Quản lý sách</h4>
+    <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Thêm sách</a>
+</div>
+
+<form method="get" class="card mb-3">
+    <div class="card-body d-flex gap-2 align-items-end">
+        <div class="flex-grow-1">
+            <label class="form-label small">Tìm kiếm</label>
+            <input name="search" value="@ViewBag.Search" class="form-control" placeholder="Tên sách, tác giả..." />
+        </div>
+        <div>
+            <label class="form-label small">Danh mục</label>
+            <select name="categoryId" class="form-select">
+                <option value="">Tất cả</option>
+                @foreach (var cat in ViewBag.Categories)
+                {
+                    <option value="@cat.Id" selected="@(ViewBag.CategoryId?.ToString() == cat.Id.ToString())">@cat.Name</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-outline-primary"><i class="bi bi-search"></i> Lọc</button>
+        @if (ViewBag.Search != null || ViewBag.CategoryId != null)
+        {
+            <a asp-action="Index" class="btn btn-outline-secondary">Xóa lọc</a>
+        }
+    </div>
+</form>
+
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th style="width:50px">ID</th>
+                        <th style="width:60px">Ảnh</th>
+                        <th>Tiêu đề</th>
+                        <th>Tác giả</th>
+                        <th>Danh mục</th>
+                        <th>Giá</th>
+                        <th>Tồn kho</th>
+                        <th style="width:120px">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var book in Model)
+                    {
+                        <tr>
+                            <td>@book.Id</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(book.ImageUrl))
+                                {
+                                    <img src="@book.ImageUrl" alt="@book.Title" style="width:40px;height:50px;object-fit:cover;border-radius:4px;" />
+                                }
+                                else
+                                {
+                                    <div style="width:40px;height:50px;background:#eee;border-radius:4px;display:flex;align-items:center;justify-content:center">
+                                        <i class="bi bi-book text-muted"></i>
+                                    </div>
+                                }
+                            </td>
+                            <td><strong>@book.Title</strong></td>
+                            <td>@book.Author?.Name</td>
+                            <td>@book.Category?.Name</td>
+                            <td>@book.Price.ToString("N0") đ</td>
+                            <td>
+                                @if (book.Stock == 0)
+                                {
+                                    <span class="badge bg-danger">Hết</span>
+                                }
+                                else if (book.Stock < 10)
+                                {
+                                    <span class="badge bg-warning">@book.Stock</span>
+                                }
+                                else
+                                {
+                                    <span>@book.Stock</span>
+                                }
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@book.Id" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
+                                <form asp-action="Delete" asp-route-id="@book.Id" method="post" class="d-inline"
+                                      onsubmit="return confirm('Xóa sách này?')">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                    @if (!Model.Any())
+                    {
+                        <tr><td colspan="8" class="text-center text-muted py-4">Không có sách nào</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

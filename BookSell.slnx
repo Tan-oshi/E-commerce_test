@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="BookSell.Data/BookSell.Data.csproj" />
+  <Project Path="BookSell.Models/BookSell.Models.csproj" />
+  <Project Path="BookSell.Web/BookSell.Web.csproj" />
+</Solution>

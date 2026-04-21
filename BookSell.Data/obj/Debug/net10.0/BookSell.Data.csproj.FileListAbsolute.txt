@@ -1,0 +1,17 @@
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Data\bin\Debug\net10.0\BookSell.Data.deps.json
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Data\bin\Debug\net10.0\BookSell.Data.runtimeconfig.json
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Data\bin\Debug\net10.0\BookSell.Data.dll
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Data\bin\Debug\net10.0\BookSell.Data.pdb
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Data\bin\Debug\net10.0\BookSell.Models.dll
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Data\bin\Debug\net10.0\BookSell.Models.pdb
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Data\obj\Debug\net10.0\BookSell.Data.csproj.AssemblyReference.cache
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Data\obj\Debug\net10.0\BookSell.Data.GeneratedMSBuildEditorConfig.editorconfig
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Data\obj\Debug\net10.0\BookSell.Data.AssemblyInfoInputs.cache
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Data\obj\Debug\net10.0\BookSell.Data.AssemblyInfo.cs
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Data\obj\Debug\net10.0\BookSell.Data.csproj.CoreCompileInputs.cache
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Data\obj\Debug\net10.0\BookSell.5584572B.Up2Date
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Data\obj\Debug\net10.0\BookSell.Data.dll
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Data\obj\Debug\net10.0\refint\BookSell.Data.dll
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Data\obj\Debug\net10.0\BookSell.Data.pdb
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Data\obj\Debug\net10.0\BookSell.Data.genruntimeconfig.cache
+D:\Nhat Tan\Tập tành\Coding\ClaudeCode\BookSell.Data\obj\Debug\net10.0\ref\BookSell.Data.dll

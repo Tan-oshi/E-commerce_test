@@ -1,0 +1,124 @@
+@model BookSell.Web.ViewModels.CartViewModel
+@{
+    ViewData["Title"] = "Thanh toán";
+    decimal shipping = Model.TotalAmount >= 200000 ? 0 : 30000;
+    decimal grandTotal = Model.TotalAmount + shipping;
+}
+
+<h3 class="mb-4"><i class="bi bi-credit-card"></i> Thanh toán</h3>
+
+<div class="row g-4">
+    <!-- Delivery Form -->
+    <div class="col-lg-7">
+        <div class="card mb-3">
+            <div class="card-header"><strong><i class="bi bi-truck"></i> Thông tin giao hàng</strong></div>
+            <div class="card-body">
+                <form method="post" asp-action="PlaceOrder" id="checkoutForm">
+                    <div class="mb-3">
+                        <label class="form-label">Họ tên người nhận *</label>
+                        <input name="RecipientName" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Số điện thoại *</label>
+                        <input name="Phone" class="form-control" type="tel" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Địa chỉ giao hàng *</label>
+                        <textarea name="ShippingAddress" class="form-control" rows="2" required
+                                  placeholder="VD: 123 Nguyễn Trãi, P.5, Q.1, TP.HCM"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ghi chú (tùy chọn)</label>
+                        <textarea name="Note" class="form-control" rows="2" placeholder="VD: Giao giờ hành chính, gọi trước khi giao..."></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><strong><i class="bi bi-wallet2"></i> Phương thức thanh toán</strong></div>
+            <div class="card-body">
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="PaymentMethod" value="COD" id="cod" checked>
+                    <label class="form-check-label" for="cod">
+                        <strong>Thanh toán khi nhận hàng (COD)</strong>
+                        <div class="text-muted small">Trả tiền mặt khi nhận được sách</div>
+                    </label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="PaymentMethod" value="BankTransfer" id="bank" disabled>
+                    <label class="form-check-label" for="bank">
+                        <strong>Chuyển khoản ngân hàng</strong>
+                        <div class="text-muted small">Thanh toán qua tài khoản ngân hàng (sắp ra mắt)</div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-header"><strong><i class="bi bi-cart3"></i> Đơn hàng của bạn</strong></div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush">
+                    @foreach (var item in Model.Items)
+                    {
+                        <div class="list-group-item d-flex gap-3 py-2">
+                            @if (!string.IsNullOrEmpty(item.ImageUrl))
+                            {
+                                <img src="@item.ImageUrl" alt="@item.Title"
+                                     style="width:40px;height:55px;object-fit:cover;border-radius:4px">
+                            }
+                            else
+                            {
+                                <div style="width:40px;height:55px;background:#eee;border-radius:4px;display:flex;align-items:center;justify-content:center">
+                                    <i class="bi bi-book text-muted small"></i>
+                                </div>
+                            }
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold" style="font-size:0.85rem">@item.Title</div>
+                                <div class="text-muted small">@item.Quantity x @item.UnitPrice.ToString("N0") đ</div>
+                            </div>
+                            <div class="fw-semibold">@item.Subtotal.ToString("N0") đ</div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between mb-1">
+                    <span>Tạm tính</span>
+                    <span>@Model.TotalAmount.ToString("N0") đ</span>
+                </div>
+                <div class="d-flex justify-content-between mb-1">
+                    <span>Phí vận chuyển</span>
+                    @if (shipping == 0)
+                    {
+                        <span class="text-success">Miễn phí</span>
+                    }
+                    else
+                    {
+                        <span>@shipping.ToString("N0") đ</span>
+                    }
+                </div>
+                @if (shipping > 0)
+                {
+                    <div class="small text-muted mb-2">
+                        <i class="bi bi-truck"></i> Đơn từ 200.000đ được miễn phí giao hàng
+                    </div>
+                }
+                <hr>
+                <div class="d-flex justify-content-between mb-3">
+                    <strong>Tổng cộng</strong>
+                    <strong class="text-primary fs-5">@grandTotal.ToString("N0") đ</strong>
+                </div>
+                <button form="checkoutForm" type="submit" class="btn btn-primary w-100 btn-lg">
+                    <i class="bi bi-bag-check"></i> Đặt hàng ngay
+                </button>
+                <a asp-action="Index" asp-controller="Cart" class="btn btn-outline-secondary w-100 mt-2">
+                    <i class="bi bi-arrow-left"></i> Quay lại giỏ hàng
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

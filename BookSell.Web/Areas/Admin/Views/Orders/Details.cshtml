@@ -1,0 +1,112 @@
+@model Order
+@{
+    ViewData["Title"] = $"Chi tiết đơn hàng #{Model.Id}";
+}
+
+<div class="top-bar">
+    <h4 class="mb-0">Đơn hàng #@Model.Id</h4>
+    <a asp-action="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Quay lại</a>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-8">
+        <div class="card mb-3">
+            <div class="card-header"><strong>Thông tin giao hàng</strong></div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <label class="small text-muted">Người nhận</label>
+                        <div>@Model.RecipientName</div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label class="small text-muted">Số điện thoại</label>
+                        <div>@Model.Phone</div>
+                    </div>
+                    <div class="col-12 mb-2">
+                        <label class="small text-muted">Địa chỉ giao hàng</label>
+                        <div>@Model.ShippingAddress</div>
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.Note))
+                    {
+                        <div class="col-12">
+                            <label class="small text-muted">Ghi chú</label>
+                            <div>@Model.Note</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><strong>Chi tiết đơn hàng</strong></div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th class="text-center">Số lượng</th>
+                                <th class="text-end">Đơn giá</th>
+                                <th class="text-end">Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td>@item.Book?.Title</td>
+                                    <td class="text-center">@item.Quantity</td>
+                                    <td class="text-end">@item.UnitPrice.ToString("N0") đ</td>
+                                    <td class="text-end">@((item.UnitPrice * item.Quantity).ToString("N0")) đ</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" class="text-end"><strong>Tổng cộng:</strong></td>
+                                <td class="text-end"><strong>@Model.TotalAmount.ToString("N0") đ</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header"><strong>Cập nhật trạng thái</strong></div>
+            <div class="card-body">
+                <form asp-action="UpdateStatus" asp-route-id="@Model.Id" method="post">
+                    <select name="status" class="form-select mb-3">
+                        @foreach (var s in Enum.GetValues<OrderStatus>())
+                        {
+                            <option value="@s" selected="@(Model.Status == s)">@s</option>
+                        }
+                    </select>
+                    <button type="submit" class="btn btn-primary w-100"><i class="bi bi-check-lg"></i> Cập nhật</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <div class="mb-2">
+                    <label class="small text-muted">Mã đơn</label>
+                    <div>#@Model.Id</div>
+                </div>
+                <div class="mb-2">
+                    <label class="small text-muted">Ngày đặt</label>
+                    <div>@Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</div>
+                </div>
+                @if (Model.User != null)
+                {
+                    <div>
+                        <label class="small text-muted">Tài khoản</label>
+                        <div>@Model.User.Email</div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

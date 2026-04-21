@@ -1,0 +1,51 @@
+@model IEnumerable<Publisher>
+@{
+    ViewData["Title"] = "Quản lý nhà xuất bản";
+}
+
+<div class="top-bar">
+    <h4 class="mb-0">Quản lý nhà xuất bản</h4>
+    <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Thêm NXB</a>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên NXB</th>
+                        <th>Mô tả</th>
+                        <th>Website</th>
+                        <th>Số sách</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var pub in Model)
+                    {
+                        <tr>
+                            <td>@pub.Id</td>
+                            <td><strong>@pub.Name</strong></td>
+                            <td>@pub.Description</td>
+                            <td><a href="@pub.Website" target="_blank" class="text-decoration-none">@pub.Website</a></td>
+                            <td><span class="badge bg-secondary">@pub.Books.Count</span></td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@pub.Id" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
+                                <form asp-action="Delete" asp-route-id="@pub.Id" method="post" class="d-inline"
+                                      onsubmit="return confirm('Xóa NXB này?')">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                    @if (!Model.Any())
+                    {
+                        <tr><td colspan="6" class="text-center text-muted py-4">Chưa có NXB nào</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+@model Book
+@{
+    ViewData["Title"] = "Thêm sách";
+}
+
+<div class="top-bar">
+    <h4 class="mb-0">Thêm sách mới</h4>
+    <a asp-action="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Quay lại</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <label class="form-label">Tiêu đề *</label>
+                    <input asp-for="Title" class="form-control" required />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Giá (VNĐ) *</label>
+                    <input asp-for="Price" class="form-control" type="number" step="1000" min="0" required />
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Mô tả</label>
+                    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Danh mục *</label>
+                    <select asp-for="CategoryId" class="form-select" asp-items="@(new SelectList(ViewBag.Categories, "Id", "Name"))" required>
+                        <option value="">-- Chọn danh mục --</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Tác giả *</label>
+                    <select asp-for="AuthorId" class="form-select" asp-items="@(new SelectList(ViewBag.Authors, "Id", "Name"))" required>
+                        <option value="">-- Chọn tác giả --</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Nhà xuất bản *</label>
+                    <select asp-for="PublisherId" class="form-select" asp-items="@(new SelectList(ViewBag.Publishers, "Id", "Name"))" required>
+                        <option value="">-- Chọn NXB --</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Tồn kho</label>
+                    <input asp-for="Stock" class="form-control" type="number" min="0" value="0" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">ISBN</label>
+                    <input asp-for="Isbn" class="form-control" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Năm xuất bản</label>
+                    <input asp-for="YearPublished" class="form-control" type="number" />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">URL hình ảnh</label>
+                    <input asp-for="ImageUrl" class="form-control" placeholder="https://..." />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Nổi bật</label>
+                    <div class="form-check mt-2">
+                        <input asp-for="IsFeatured" class="form-check-input" type="checkbox" />
+                        <label class="form-check-label">Hiển thị nổi bật</label>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg"></i> Thêm sách</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+@model Order
+@{
+    ViewData["Title"] = "Đặt hàng thành công";
+}
+
+<div class="text-center py-5">
+    <div style="width:80px;height:80px;background:#2E7D32;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem">
+        <i class="bi bi-check-lg text-white" style="font-size:2.5rem"></i>
+    </div>
+    <h2 class="mb-2">Đặt hàng thành công!</h2>
+    <p class="text-muted mb-1">Cảm ơn bạn đã đặt hàng tại BookSell.</p>
+    <p class="mb-4">
+        Mã đơn hàng: <strong>#@Model.Id</strong><br>
+        Tổng tiền: <strong class="text-primary">@Model.TotalAmount.ToString("N0") đ</strong>
+    </p>
+
+    <div class="card text-start mx-auto" style="max-width:600px">
+        <div class="card-header">
+            <strong>Chi tiết đơn hàng #@Model.Id</strong>
+        </div>
+        <div class="card-body p-0">
+            <div class="list-group list-group-flush">
+                @foreach (var item in Model.Items)
+                {
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>@item.Book?.Title</strong>
+                            <div class="text-muted small">@item.Quantity x @item.UnitPrice.ToString("N0") đ</div>
+                        </div>
+                        <strong>@((item.Quantity * item.UnitPrice).ToString("N0")) đ</strong>
+                    </div>
+                }
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between mb-1">
+                    <span>Người nhận</span>
+                    <span>@Model.RecipientName — @Model.Phone</span>
+                </div>
+                <div class="d-flex justify-content-between mb-1">
+                    <span>Địa chỉ</span>
+                    <span>@Model.ShippingAddress</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span>Trạng thái</span>
+                    <span class="badge bg-warning text-dark">@Model.Status</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4 d-flex gap-2 justify-content-center">
+        <a asp-area="" asp-controller="Orders" asp-action="Index" class="btn btn-outline-primary">
+            <i class="bi bi-receipt"></i> Xem đơn hàng
+        </a>
+        <a asp-area="" asp-controller="Books" asp-action="Index" class="btn btn-primary">
+            <i class="bi bi-bag"></i> Tiếp tục mua sắm
+        </a>
+    </div>
+</div>
